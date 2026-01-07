@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ATS Resume Analyzer</title>
+
+<style>
+/* ================== RESET ================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #050505, #000000);
+  color: white;
+  overflow-x: hidden;
+}
+
+/* ================== STAR BACKGROUND ================== */
+.stars, .stars2, .stars3 {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: -1;
+}
+
+.stars {
+  background: url("https://www.transparenttextures.com/patterns/stardust.png");
+  animation: drift 90s linear infinite;
+}
+
+.stars2 {
+  background: url("https://www.transparenttextures.com/patterns/stardust.png");
+  opacity: 0.5;
+  animation: drift 160s linear infinite;
+}
+
+.stars3 {
+  background: url("https://www.transparenttextures.com/patterns/stardust.png");
+  opacity: 0.25;
+  animation: drift 220s linear infinite;
+}
+
+@keyframes drift {
+  from { background-position: 0 0; }
+  to { background-position: 12000px 8000px; }
+}
+
+/* ================== HERO ================== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.hero-content {
+  max-width: 1000px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 56px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #9f7aea, #00eaff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(159,122,234,0.4);
+}
+
+.hero p {
+  margin-top: 20px;
+  font-size: 20px;
+  color: #bbb;
+}
+
+/* ================== BUTTON ================== */
+.cta {
+  margin-top: 40px;
+}
+
+.cta button {
+  padding: 16px 38px;
+  font-size: 17px;
+  background: linear-gradient(135deg, #6f42c1, #007bff);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 40px rgba(0,123,255,0.35);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cta button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 60px rgba(0,123,255,0.6);
+}
+
+/* ================== ANALYZER CARD ================== */
+.analyzer {
+  max-width: 1000px;
+  margin: 0 auto 100px;
+  padding: 50px;
+  background: rgba(15, 15, 20, 0.85);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 60px rgba(255,255,255,0.05);
+}
+
+.analyzer h2 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+/* ================== FORM ================== */
+.form-group {
+  margin-top: 20px;
+}
+
+label {
+  font-weight: 600;
+  color: #ddd;
+}
+
+input, select, textarea {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  background: #0c0c0c;
+  color: white;
+  border: 1px solid #333;
+  border-radius: 12px;
+}
+
+textarea {
+  min-height: 130px;
+}
+
+/* ================== RESULT ================== */
+.result {
+  display: none;
+  margin-top: 40px;
+  padding: 30px;
+  background: #0a0a0a;
+  border-radius: 16px;
+  border: 1px solid #222;
+}
+
+.score {
+  text-align: center;
+  font-size: 34px;
+  color: #00ffb2;
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.advantages {
+  color: #00ffb2;
+}
+
+.disadvantages {
+  color: #ff6b6b;
+}
+
+ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+/* ================== FOOTER ================== */
+footer {
+  text-align: center;
+  color: #777;
+  padding-bottom: 40px;
+}
+
+/* ================== RESPONSIVE ================== */
+@media(max-width: 768px) {
+  .hero h1 { font-size: 40px; }
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+<div class="stars2"></div>
+<div class="stars3"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>AI-Powered ATS Resume Analyzer</h1>
+    <p>Get your resume scored, optimized, and shortlisted by company ATS systems.</p>
+
+    <div class="cta">
+      <button onclick="document.getElementById('analyzer').scrollIntoView({behavior:'smooth'})">
+        Analyze My Resume
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ANALYZER -->
+<section class="analyzer" id="analyzer">
+  <h2>Upload & Analyze</h2>
+
+  <div class="form-group">
+    <label>Upload Resume (PDF / DOC)</label>
+    <input type="file" accept=".pdf,.doc,.docx">
+  </div>
+
+  <div class="form-group">
+    <label>Select Company</label>
+    <select>
+      <option>Google</option>
+      <option>Amazon</option>
+      <option>Microsoft</option>
+      <option>Generic ATS</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Job Description</label>
+    <textarea placeholder="Paste job description here..."></textarea>
+  </div>
+
+  <div class="cta">
+    <button onclick="analyzeResume()">Analyze Resume</button>
+  </div>
+
+  <div class="result" id="result">
+    <div class="score">⭐ ATS Score: 86%</div>
+
+    <div class="grid">
+      <div class="advantages">
+        <h3>✔ Strengths</h3>
+        <ul>
+          <li>Excellent keyword matching</li>
+          <li>ATS-friendly formatting</li>
+          <li>Relevant experience highlighted</li>
+        </ul>
+      </div>
+
+      <div class="disadvantages">
+        <h3>✖ Improvements</h3>
+        <ul>
+          <li>Add quantified achievements</li>
+          <li>Include a strong summary section</li>
+          <li>Improve skill prioritization</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 AI ATS Resume Analyzer
+</footer>
+
+<script>
+function analyzeResume() {
+  document.getElementById("result").style.display = "block";
+}
+</script>
+
+</body>
+</html>
